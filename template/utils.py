@@ -1,10 +1,12 @@
-from collections import defaultdict, deque, Counter
-from heapq import heapify, heappop, heappush
-from itertools import count
-from copy import deepcopy
-from functools import reduce
-import re
+from collections import defaultdict, Counter, deque, OrderedDict
+from heapq import heappush, heappop, heapify, nlargest, nsmallest
+from bisect import bisect_left, bisect_right, insort
+from itertools import permutations, combinations, combinations_with_replacement, accumulate, product, groupby, count
+from functools import lru_cache, reduce
+from math import gcd, lcm, sqrt, ceil, floor, factorial
 import math
+from copy import deepcopy
+import re
 import sys
 import typing
 import string
@@ -19,7 +21,6 @@ def lmap(func, *iterables):
   return list(map(func, *iterables))
 def flatten(l):
   return [i for x in l for i in x]
-
 def ints(s: str) -> typing.List[int]:
   return lmap(int, re.findall(r"-?\d+", s))
 def positive_ints(s: str) -> typing.List[int]:
@@ -30,7 +31,6 @@ def positive_floats(s: str) -> typing.List[float]:
   return lmap(float, re.findall(r"\d+(?:\.\d+)?", s))
 def words(s: str) -> typing.List[str]:
   return re.findall(r"[a-zA-Z]+", s)
-
 def alphabetLower():
   return list(string.ascii_letters[:26])
 def alphabetUpper():
