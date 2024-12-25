@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Function to show usage
+show_usage() {
+	echo "Usage: $0 year day [-i input] [-f file]"
+	echo "If year and day are not provided, today's date will be used"
+	echo "Options:"
+	echo "        - Year (YYYY format)"
+	echo "        - Day (DD format)"
+	echo "  -f    - Run file: the module to be run instead of main.py"
+	echo "  -i    - Input file: either a full path or a simple string"
+	echo "          - If it's a path, it will use that exact path"
+	echo "          - If it's a string, it will use path: YYYY/DD/\${string}.txt"
+	echo "  -h    Show this help message"
+	exit 1
+}
+
+# Get today's date components
+current_year=$(date +%Y)
+current_day=$(date +%d)
+
+# Use current date if no arguments provided
+year=${1:-$current_year}
+day=${2:-$current_day}
+
+# Shift past the positional parameters
+shift 2
+
+# Parse command line arguments
+while getopts "i:f:h" opt; do
+	case ${opt} in
+	i)
+		input_param=${OPTARG}
+		;;
+	f)
+		module_param=${OPTARG}
+		;;
+	h)
+		show_usage
+		;;
+	\?)
+		show_usage
+		;;
+	esac
+done
+
+# Construct the input path based on whether a full path was provided
+if [ -z "$input_param" ]; then
+	# No input parameter provided, use default
+	input_path="$(pwd)/${year}/${day}/input.txt"
+elif [[ "$input_param" == /* ]] || [[ "$input_param" == ./* ]] || [[ "$input_param" == ../* ]] || [[ "$input_param" == */* ]]; then
+	# Input parameter contains path separators, treat as full path
+	input_path="$input_param"
+else
+	# Input parameter is a simple string, use it in the default path structure
+	input_path="$(pwd)/${year}/${day}/${input_param}.txt"
+fi
+
+# Check if input file exists
+if [ ! -f "$input_path" ]; then
+	echo "Error: Input file not found at $input_path"
+	exit 1
+fi
+
+# Get module or default to main
+module=${module_param:-main}
+module_path="$year/$day/$module.py"
+if [ ! -f $module_path ]; then
+	echo "Error: Module file not found at $module_path"
+	exit 1
+fi
+
+# Run the Python script
+python3 -m ${year}.${day}.${module} "$input_path"
