@@ -3,7 +3,6 @@
 # Function to show usage
 show_usage() {
 	echo "Usage: $0 year day [-i input] [-f file]"
-	echo "If year and day are not provided, today's date will be used"
 	echo "Options:"
 	echo "        - Year (YYYY format)"
 	echo "        - Day (DD format)"
