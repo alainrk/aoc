@@ -25,7 +25,6 @@ def solve(__file, pt):
         prev = word[0]
         for j in range(1, len(word)):
             if f"{prev}{word[j]}" in ["ab", "cd", "pq", "xy"]:
-                print(prev, word[j])
                 ok = False
                 break
             # 2 eq in a row
@@ -55,7 +54,6 @@ def solve(__file, pt):
             if i < len(word) - 1:
                 xyx = f"{p}{word[i+1]}"
                 if xyx == xyx[::-1]:
-                    print(xyx)
                     hasXYX = True
 
             if p not in pairs:
@@ -66,7 +64,6 @@ def solve(__file, pt):
                 # otherwise update
                 pairs[p] = (pairs[p][0] + 1, i)
                 if pairs[p][0] > 1:
-                    print(p, pairs[p])
                     hasPair = True
             if hasPair and hasXYX:
                 return True
@@ -80,7 +77,6 @@ def solve(__file, pt):
                 res += 1
         else:
             if nice2(word):
-                print(word)
                 res += 1
 
     return res

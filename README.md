@@ -1,9 +1,26 @@
 # Advent of Code
 
-## How to
+## Usage
+
+### Setup
 
 ```py
-# Run a specific day
+# Create venv
+python3 -m venv venv
+
+# Activate venv
+source venv/bin/activate
+```
+
+### Create another day
+
+```py
+./new [YYYY] [DD]
+```
+
+### Run a specific day
+
+```py
 # Where input_file:
 #   - If not given will take YYYY/DD/input.txt
 #   - If given as simple string e.g. "test" will take YYYY/DD/test.txt
@@ -21,7 +38,4 @@
 # ./run 2024 23 -f mainPt2
 # ./run 2024 22 -i /tmp/input.txt -f mainPt2
 ./run [YYYY] [DD] [-i input_file] [-f module_name]
-
-# Create another day
-./new [YYYY] [DD]
 ```
