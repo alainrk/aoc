@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Function to show usage
+show_usage() {
+	echo "Usage: $0 year day"
+	echo "If year and day are not provided, today's date will be used"
+	echo "Options:"
+	echo "        - Year (YYYY format)"
+	echo "        - Day (DD format)"
+	echo "  -h    Show this help message"
+	exit 1
+}
+
+# Get today's date components
+current_year=$(date +%Y)
+current_day=$(date +%d)
+
+# Use current date if no arguments provided
+year=${1:-$current_year}
+day=${2:-$current_day}
+
+# Shift past the positional parameters
+shift 2
+
+# Parse command line arguments
+while getopts "h" opt; do
+	case ${opt} in
+	h)
+		show_usage
+		;;
+	\?)
+		show_usage
+		;;
+	esac
+done
+
+# Copy from template
+# Check that the folder doesn't already exist
+if [ -d "${year}/${day}" ]; then
+	echo "Folder ${year}/${day} already exists"
+	exit 1
+fi
+
+cp -r template ${year}/${day}

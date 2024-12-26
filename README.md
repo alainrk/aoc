@@ -20,8 +20,8 @@
 # ./run 2024 22 -i /tmp/input.txt
 # ./run 2024 23 -f mainPt2
 # ./run 2024 22 -i /tmp/input.txt -f mainPt2
-./run YYYY DD [-i input_file] [-f module_name]
+./run [YYYY] [DD] [-i input_file] [-f module_name]
 
 # Create another day
-cp -r template yyyy/dd
+./new [YYYY] [DD]
 ```
