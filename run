@@ -22,10 +22,7 @@ current_day=$(date +%d)
 year=${1:-$current_year}
 day=${2:-$current_day}
 
-# Shift past the positional parameters only if there are the two parameters provided
-if [ $# -lt 2 ]; then
-	shift 2
-fi
+shift 2
 
 # Parse command line arguments
 while getopts "i:f:h" opt; do
