@@ -2,6 +2,7 @@ from utils import *
 
 #########################################################
 #########################################################
+@performance
 def solve(__file, pt):
     lines = [line.strip() for line in open(__file)]
     if len(lines) == 0:
