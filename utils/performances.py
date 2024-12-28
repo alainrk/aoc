@@ -16,7 +16,7 @@ def performance(func):
         memory_used = end_memory - start_memory
 
         # print(f"\nPerformance of {func.__name__}():")
-        print(f"[[ CPU {execution_time:.4f} sec | Mem {memory_used:.2f} MB ]]")
+        print(f"\n[[ CPU {execution_time:.4f} sec | Mem {memory_used:.2f} MB ]]")
 
         return result
 

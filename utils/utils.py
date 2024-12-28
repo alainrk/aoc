@@ -38,6 +38,14 @@ def alphabetUpper():
 def alphabet():
   return list(string.ascii_letters)
 
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
 '''p and q are points with arbitrary dimensions (e.g. [2, 3, 1], [5, 6, 4])'''
 def manhattan_distance(p, q):
   distance = 0
