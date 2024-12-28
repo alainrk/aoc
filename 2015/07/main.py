@@ -55,9 +55,6 @@ def solve(__file, pt):
         if op == "ASSIGN":
             t = getval(x)
 
-        if w not in W:
-            assert False
-            W[w] = (None, None, None, None)
         W[w][0] = t
 
         return t
