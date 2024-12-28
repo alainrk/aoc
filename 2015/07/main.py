@@ -63,6 +63,13 @@ def solve(__file, pt):
         return t
 
     res = resolve("a")
+    if pt == 1:
+        return res
+
+    for w in W:
+        W[w][0] = None
+    W["b"][0] = res
+    res = resolve("a")
 
     return res
 #########################################################
