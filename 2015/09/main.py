@@ -48,7 +48,10 @@ def solve(__file, pt):
             if mask & (1 << city) == 0:  # if city is not visited
                 new_mask = mask | (1 << city)
                 d, path = shortest_path(new_mask, city)
-                if dist[pos][city] + d < ans:
+                if pt == 1 and dist[pos][city] + d < ans:
+                    ans = dist[pos][city] + d
+                    best_path = [cities[pos]] + path
+                elif pt == 2 and dist[pos][city] + d > ans:
                     ans = dist[pos][city] + d
                     best_path = [cities[pos]] + path
 
@@ -56,18 +59,21 @@ def solve(__file, pt):
         return dp[state]
 
     # Try starting from each city
-    min_distance = size
+    d = size
     best_path = []
 
     for start in range(n):
         # Initialize with only start city visited
         initial_mask = 1 << start
         distance, path = shortest_path(initial_mask, start)
-        if distance < min_distance:
-            min_distance = distance
+        if pt == 1 and distance < d:
+            d = distance
+            best_path = path
+        elif pt == 2 and distance > d:
+            d = distance
             best_path = path
 
-    return min_distance, best_path
+    return d, best_path
 
 #########################################################
 #########################################################
