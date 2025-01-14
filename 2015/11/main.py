@@ -44,14 +44,18 @@ def solve(__file, pt):
             if len(q) == 4:
                q.popleft()
             if len(q) == 3 and q[0] == q[1] - 1 == q[2] - 2:
-                print(q)
                 straight += 1
             prev = c
         return doubles == 2 and straight > 0
 
     while not isValid(psw):
         psw = increment(psw)
-    
+    if pt == 1: 
+        return psw
+
+    psw = increment(psw)
+    while not isValid(psw):
+        psw = increment(psw)
     return psw
 
 #########################################################
