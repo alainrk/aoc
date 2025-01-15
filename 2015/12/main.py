@@ -23,6 +23,27 @@ def solve(__file, pt):
     with open(__file) as f:
         data = json.load(f)
 
+    def iter(obj):
+        res = 0
+        if isinstance(obj, list):
+            for v in obj:
+                res += iter(v)
+        elif isinstance(obj, dict):
+            tmp = 0
+            for k, v in obj.items():
+                if v == "red":
+                    return 0
+                tmp += iter(v)
+            res += tmp
+        else:
+            # Check if number
+            if isinstance(obj, int):
+                return obj
+
+        return res
+    
+    res = iter(data)
+
     return res
 
 
