@@ -17,6 +17,12 @@ def solve(__file, pt):
             P[r["p1"]] = {}
         P[r["p1"]][r["p2"]] = int(r["amount"]) * (1 if r["action"] == "gain" else -1)
 
+    if pt == 2:
+        people = [k for k in P.keys()]
+        P["me"] = {}
+        for p in people:
+            P["me"][p] = 0
+            P[p]["me"] = 0
 
     def happiness(perm):
         h = 0
