@@ -11,12 +11,28 @@ def solve(__file, pt):
 
     res = 0
     dial = 50
-    for i, line in enumerate(lines):
-        sign, amount = line[:1], int(line[1:])
-        sign = -1 if sign == "L" else 1
-        dial = (dial + (sign * amount)) % 100
-        if dial == 0:
-            res += 1
+
+    for line in lines:
+        sign, amount = -1 if line[0] == "L" else 1, int(line[1:])
+
+        prev = dial
+        dial += sign * amount
+
+        if pt == 1:
+            if dial % 100 == 0:
+                res += 1
+        else:
+            # Right
+            if sign == 1:
+                # Formula: floor(end/100) - floor(start/100)
+                # Example: Start 99, Move 2 -> End 101. 101//100 (1) - 99//100 (0) = 1 click.
+                res += (dial // 100) - (prev // 100)
+
+            # Left
+            else:
+                # Formula: is shifted by -1 because leaving 0 (going 0 -> -1) does NOT count.
+                # Only arriving at 0 (1 -> 0) counts.
+                res += ((prev - 1) // 100) - ((dial - 1) // 100)
 
     return res
 
