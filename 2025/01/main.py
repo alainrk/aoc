@@ -24,14 +24,15 @@ def solve(__file, pt):
         else:
             # Right
             if sign == 1:
-                # Formula: floor(end/100) - floor(start/100)
-                # Example: Start 99, Move 2 -> End 101. 101//100 (1) - 99//100 (0) = 1 click.
+                # How many multiples of 100 encountering when moving to right
+                # i.e. the multiples at the end of the move (inclusive) - the multiples when we started (exclusive)
                 res += (dial // 100) - (prev // 100)
 
             # Left
             else:
-                # Formula: is shifted by -1 because leaving 0 (going 0 -> -1) does NOT count.
-                # Only arriving at 0 (1 -> 0) counts.
+                # Modulo is exclusive but we need it inclusive going left
+                # Arriving at 0 should count, but starting at 0 shouldn't
+                # Applying -1 offset tricks the math's modulo
                 res += ((prev - 1) // 100) - ((dial - 1) // 100)
 
     return res
