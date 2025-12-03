@@ -32,7 +32,6 @@ def solve(__file, pt):
     ranges = []
     for n, line in enumerate(lines):
         chunks = line.split(",")
-        # print(chunks)
         ranges = [list(map(int, x.split("-"))) for x in chunks]
         # Only one line
         break
@@ -46,9 +45,7 @@ def solve(__file, pt):
                     res += n
             if pt == 2:
                 for l in reversed(range(1, len(s) // 2 + 1)):
-                    # print("Split:", l, end=", ")
                     if all_equal(split_in_chunks(s, l)):
-                        # print("Found:", n)
                         res += n
                         break
 
@@ -60,7 +57,7 @@ def solve(__file, pt):
 
 if __name__ == "__main__":
     input_file = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
-    # i_sol1 = solve(input_file, 1)
-    # print(f"\033[1m\033[92m[SOLUTION] {i_sol1 = }\033[0m")
+    i_sol1 = solve(input_file, 1)
+    print(f"\033[1m\033[92m[SOLUTION] {i_sol1 = }\033[0m")
     i_sol2 = solve(input_file, 2)
     print(f"\033[1m\033[92m[SOLUTION] {i_sol2 = }\033[0m")
