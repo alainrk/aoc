@@ -9,24 +9,27 @@ def solve(__file, pt):
     if len(lines) == 0:
         return -1
 
+    K = 2 if pt == 1 else 12
+
     res = 0
     bs = []
     for i, line in enumerate(lines):
         bs.append([int(c) for c in line])
 
     for b in bs:
-        max1, max2, maxn = 0, 0, 0
+        stack = [b[0]]
+        drops = len(b) - K
 
-        for i, c in enumerate(b):
-            # print(f"{c = }, {max1 = }, {max2 = }, {maxn = }")
-            if c * 10 > maxn and i < len(b) - 1:
-                maxn, max1, max2 = c * 10, c, 0
-                continue
-            if max1 * 10 + c > maxn:
-                maxn, max1, max2 = max1 * 10 + c, max1, c
+        for c in b[1:]:
+            while len(stack) and drops > 0 and c > stack[-1]:
+                stack.pop()
+                drops -= 1
+            if len(stack) < K:
+                stack.append(c)
+            else:
+                drops -= 1
 
-        # print(f"{b = }, {max1 = }, {max2 = }, {maxn = }")
-        res += max1 * 10 + max2
+        res += int("".join(map(str, stack)))
 
     return res
 
