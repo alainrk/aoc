@@ -19,32 +19,35 @@ def solve(__file, pt):
     R, C = len(grid), len(grid[0])
     newgrid = deepcopy(grid)
 
-    for r, row in enumerate(grid):
-        for c, col in enumerate(row):
-            if col == ".":
-                continue
-
-            # print(f"{r = }, {c = }, {grid[r][c] = }")
-
-            neighbours = 0
-            breakloop = False
-            for d in dirs:
-                x, y = r + d[0], c + d[1]
-                if x < 0 or x >= R or y < 0 or y >= C:
+    while True:
+        removed = False
+        for r, row in enumerate(grid):
+            for c, col in enumerate(row):
+                if col == ".":
                     continue
-                if grid[x][y] == "@":
-                    neighbours += 1
-                if neighbours > 3:
-                    breakloop = True
-                    break
 
-            if breakloop:
-                continue
-            newgrid[r][c] = "x"
-            res += 1
+                neighbours = 0
+                breakloop = False
+                for d in dirs:
+                    x, y = r + d[0], c + d[1]
+                    if x < 0 or x >= R or y < 0 or y >= C:
+                        continue
+                    if grid[x][y] == "@":
+                        neighbours += 1
+                    if neighbours > 3:
+                        breakloop = True
+                        break
 
-    # for row in newgrid:
-    #     print("".join(row))
+                if breakloop:
+                    continue
+                newgrid[r][c] = "."
+                removed = True
+                res += 1
+        if pt == 1:
+            break
+        grid = deepcopy(newgrid)
+        if not removed:
+            break
 
     return res
 
