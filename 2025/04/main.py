@@ -1,3 +1,4 @@
+from os import remove
 from utils import *
 
 
@@ -17,7 +18,6 @@ def solve(__file, pt):
         grid.append([x for x in line])
 
     R, C = len(grid), len(grid[0])
-    newgrid = deepcopy(grid)
 
     while True:
         removed = False
@@ -40,12 +40,12 @@ def solve(__file, pt):
 
                 if breakloop:
                     continue
-                newgrid[r][c] = "."
-                removed = True
                 res += 1
+                if pt == 2:
+                    grid[r][c] = "."
+                    removed = True
         if pt == 1:
             break
-        grid = deepcopy(newgrid)
         if not removed:
             break
 
