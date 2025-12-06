@@ -1,3 +1,4 @@
+from heapq import merge
 from utils import *
 
 
@@ -24,16 +25,41 @@ def solve(__file, pt):
 
     ranges.sort()
 
-    for i in ingredients:
-        # print(i)
+    if pt == 1:
+        for i in ingredients:
+            for r in ranges:
+                if r[0] <= i <= r[1]:
+                    res += 1
+                    break
+                if i < r[1]:
+                    break
+    else:
+        # Merge ranges
+        curr = 0
+        next = 1
+        while next < len(ranges):
+            if ranges[next] is None:
+                next += 1
+                continue
+
+            if ranges[curr] is None:
+                curr += 1
+                continue
+
+            if ranges[curr][1] >= ranges[next][0]:
+                ranges[curr][1] = max(ranges[curr][1], ranges[next][1])
+                ranges[next] = None
+                next += 1
+                continue
+
+            curr = next
+            next += 1
+
         for r in ranges:
-            # print("   ", r)
-            if r[0] <= i <= r[1]:
-                # print(f"{i = }, {r[0] = }, {r[1] = }")
-                res += 1
-                break
-            if i < r[1]:
-                break
+            if r is None:
+                continue
+            start, end = r
+            res += (end - start) + 1
 
     return res
 
