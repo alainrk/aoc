@@ -56,3 +56,150 @@ func ReadLines(filename string) ([]string, error) {
 	}
 	return lines, scanner.Err()
 }
+
+func PositiveInts(s string) []int {
+	re := regexp.MustCompile(`\d+`)
+	matches := re.FindAllString(s, -1)
+	result := make([]int, 0, len(matches))
+	for _, m := range matches {
+		n, _ := strconv.Atoi(m)
+		result = append(result, n)
+	}
+	return result
+}
+
+func Floats(s string) []float64 {
+	re := regexp.MustCompile(`-?\d+(?:\.\d+)?`)
+	matches := re.FindAllString(s, -1)
+	result := make([]float64, 0, len(matches))
+	for _, m := range matches {
+		f, _ := strconv.ParseFloat(m, 64)
+		result = append(result, f)
+	}
+	return result
+}
+
+func PositiveFloats(s string) []float64 {
+	re := regexp.MustCompile(`\d+(?:\.\d+)?`)
+	matches := re.FindAllString(s, -1)
+	result := make([]float64, 0, len(matches))
+	for _, m := range matches {
+		f, _ := strconv.ParseFloat(m, 64)
+		result = append(result, f)
+	}
+	return result
+}
+
+func Words(s string) []string {
+	re := regexp.MustCompile(`[a-zA-Z]+`)
+	return re.FindAllString(s, -1)
+}
+
+func AlphabetLower() []string {
+	result := make([]string, 26)
+	for i := 0; i < 26; i++ {
+		result[i] = string(rune('a' + i))
+	}
+	return result
+}
+
+func AlphabetUpper() []string {
+	result := make([]string, 26)
+	for i := 0; i < 26; i++ {
+		result[i] = string(rune('A' + i))
+	}
+	return result
+}
+
+func Alphabet() []string {
+	result := make([]string, 52)
+	for i := 0; i < 26; i++ {
+		result[i] = string(rune('a' + i))
+		result[i+26] = string(rune('A' + i))
+	}
+	return result
+}
+
+func IsNumber(s string) bool {
+	_, err := strconv.ParseFloat(s, 64)
+	return err == nil
+}
+
+func ManhattanDistance(p, q []int) int {
+	distance := 0
+	for i := range p {
+		diff := p[i] - q[i]
+		if diff < 0 {
+			diff = -diff
+		}
+		distance += diff
+	}
+	return distance
+}
+
+func Flatten(nested [][]int) []int {
+	var result []int
+	for _, inner := range nested {
+		result = append(result, inner...)
+	}
+	return result
+}
+
+// UnionFind data structure
+type UnionFind struct {
+	n       int
+	parents []int
+	ranks   []int
+	NumSets int
+}
+
+func NewUnionFind(n int) *UnionFind {
+	parents := make([]int, n)
+	for i := range parents {
+		parents[i] = -1 // -1 means no parent (is root)
+	}
+	ranks := make([]int, n)
+	for i := range ranks {
+		ranks[i] = 1
+	}
+	return &UnionFind{
+		n:       n,
+		parents: parents,
+		ranks:   ranks,
+		NumSets: n,
+	}
+}
+
+func (uf *UnionFind) Find(i int) int {
+	if uf.parents[i] == -1 {
+		return i
+	}
+	uf.parents[i] = uf.Find(uf.parents[i])
+	return uf.parents[i]
+}
+
+func (uf *UnionFind) InSameSet(i, j int) bool {
+	return uf.Find(i) == uf.Find(j)
+}
+
+func (uf *UnionFind) Merge(i, j int) {
+	i = uf.Find(i)
+	j = uf.Find(j)
+
+	if i == j {
+		return
+	}
+
+	iRank := uf.ranks[i]
+	jRank := uf.ranks[j]
+
+	if iRank < jRank {
+		uf.parents[i] = j
+	} else if iRank > jRank {
+		uf.parents[j] = i
+	} else {
+		uf.parents[j] = i
+		uf.ranks[i]++
+	}
+	uf.NumSets--
+}
