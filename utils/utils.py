@@ -109,10 +109,7 @@ class UnionFind:
         self.parents[i] = p
         return p
 
-    def in_same_set(self, i: int, j: int) -> bool:
-        return self.find(i) == self.find(j)
-
-    def merge(self, i: int, j: int) -> None:
+    def union(self, i: int, j: int) -> None:
         i = self.find(i)
         j = self.find(j)
 
@@ -130,3 +127,6 @@ class UnionFind:
             self.parents[j] = i
             self.ranks[i] += 1
         self.num_sets -= 1
+
+    def in_same_set(self, i: int, j: int) -> bool:
+        return self.find(i) == self.find(j)
