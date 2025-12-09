@@ -82,6 +82,8 @@ def solve(__file, pt):
     conns.sort()
 
     LIMIT = 1000
+    if pt == 1 and "test" in __file:
+        LIMIT = 10
 
     # Use min in case there are fewer than 1000 total pairs (small inputs)
     for i in range(min(len(conns), LIMIT)):
@@ -96,6 +98,8 @@ def solve(__file, pt):
     q = []
     for i in c:
         heapq.heappush(q, -c[i])
+
+    print(q)
 
     if len(q) < 3:
         print("Error: Fewer than 3 circuits found.")
@@ -116,5 +120,5 @@ if __name__ == "__main__":
     input_file = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
     i_sol1 = solve(input_file, 1)
     print(f"\033[1m\033[92m[SOLUTION] {i_sol1 = }\033[0m")
-    # i_sol2 = solve(input_file, 2)
-    # print(f"\033[1m\033[92m[SOLUTION] {i_sol2 = }\033[0m")
+    i_sol2 = solve(input_file, 2)
+    print(f"\033[1m\033[92m[SOLUTION] {i_sol2 = }\033[0m")
