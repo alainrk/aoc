@@ -84,11 +84,24 @@ def solve(__file, pt):
     LIMIT = 1000
     if pt == 1 and "test" in __file:
         LIMIT = 10
+    if pt == 2:
+        LIMIT = float("inf")
+
+    clusters = len(lines)
 
     # Use min in case there are fewer than 1000 total pairs (small inputs)
-    for i in range(min(len(conns), LIMIT)):
-        d, a, b = conns[i]
-        uf.union(a, b)
+    if pt == 1:
+        for i in range(min(len(conns), LIMIT)):
+            d, a, b = conns[i]
+            merged = uf.union(a, b)
+    else:
+        for d, a, b in conns:
+            if uf.union(a, b):
+                clusters -= 1
+                if clusters == 1:
+                    x1 = boxes[a][0]
+                    x2 = boxes[b][0]
+                    return x1 * x2
 
     c = collections.defaultdict(int)
     for b in range(B):
@@ -98,8 +111,6 @@ def solve(__file, pt):
     q = []
     for i in c:
         heapq.heappush(q, -c[i])
-
-    print(q)
 
     if len(q) < 3:
         print("Error: Fewer than 3 circuits found.")
