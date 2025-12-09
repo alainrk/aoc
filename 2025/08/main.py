@@ -95,6 +95,7 @@ def solve(__file, pt):
                     x1 = boxes[a][0]
                     x2 = boxes[b][0]
                     return x1 * x2
+        assert False  # you cant be here
 
     # pt1
     for i in range(min(len(conns), LIMIT)):
