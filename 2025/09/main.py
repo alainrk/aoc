@@ -15,14 +15,8 @@ def solve(__file, pt):
 
     res = 0
     reds = []
-    redsset = set()
-    R = 0
-    C = 0
     for i, line in enumerate(lines):
         c, r = ints(line)
-        R = max(r, R)
-        C = max(c, C)
-        redsset.add((r, c))
         reds.append((r, c))
 
     for i in range(len(reds) - 1):
