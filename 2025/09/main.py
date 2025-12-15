@@ -13,15 +13,20 @@ def solve(__file, pt):
     if len(lines) == 0:
         return -1
 
-    res = 0
-    reds = []
-    for i, line in enumerate(lines):
-        c, r = ints(line)
-        reds.append((r, c))
+    if pt == 1:
+        res = 0
+        reds = []
+        for i, line in enumerate(lines):
+            c, r = ints(line)
+            reds.append((r, c))
 
-    for i in range(len(reds) - 1):
-        for j in range(i + 1, len(reds)):
-            res = max(res, area(reds[i], reds[j]))
+        for i in range(len(reds) - 1):
+            for j in range(i + 1, len(reds)):
+                res = max(res, area(reds[i], reds[j]))
+
+    # TODO pt2
+    else:
+        res = -1
     return res
 
 
@@ -32,5 +37,5 @@ if __name__ == "__main__":
     input_file = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
     i_sol1 = solve(input_file, 1)
     print(f"\033[1m\033[92m[SOLUTION] {i_sol1 = }\033[0m")
-    # i_sol2 = solve(input_file, 2)
-    # print(f"\033[1m\033[92m[SOLUTION] {i_sol2 = }\033[0m")
+    i_sol2 = solve(input_file, 2)
+    print(f"\033[1m\033[92m[SOLUTION] {i_sol2 = }\033[0m")
